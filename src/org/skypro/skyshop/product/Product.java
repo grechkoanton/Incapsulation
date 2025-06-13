@@ -41,4 +41,5 @@ public class Product {
     public String toString() {
         return "Название товара: " + name + ". Стоимость: " + price + " руб.";
     }
+
 }

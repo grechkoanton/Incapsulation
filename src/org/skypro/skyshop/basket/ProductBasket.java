@@ -43,7 +43,6 @@ public class ProductBasket {
     public boolean checkProductInBasketByName(String productName) {
         for (int i = 0; i < products.length; i++) {
             if (products[i] != null && products[i].getName().equals(productName)) {
-
                 return true;
             }
         }
