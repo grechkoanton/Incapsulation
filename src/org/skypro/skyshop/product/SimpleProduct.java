@@ -43,4 +43,24 @@ public class SimpleProduct extends Product {
     public String toString() {
         return "Название товара: " + name + ". Стоимость: " + price + " руб.";
     }
+
+    @Override
+    public String searchTerm() {
+        return super.searchTerm();
+    }
+
+    @Override
+    public String getSearchTypContent() {
+        return super.getSearchTypContent();
+    }
+
+    @Override
+    public String getNameSearchable() {
+        return super.getNameSearchable();
+    }
+
+    @Override
+    public String getStringRepresentation() {
+        return super.getStringRepresentation();
+    }
 }
