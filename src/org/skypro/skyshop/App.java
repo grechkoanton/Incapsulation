@@ -52,6 +52,7 @@ public class App {
         searchEngine.add(article1);
         searchEngine.add(article2);
 
+
         System.out.println(Arrays.toString(searchEngine.search("Картошка")));
         System.out.println(Arrays.toString(searchEngine.search("Бананы")));
         System.out.println(Arrays.toString(searchEngine.search("БМВ")));

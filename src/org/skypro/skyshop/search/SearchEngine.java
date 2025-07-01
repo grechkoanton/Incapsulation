@@ -9,6 +9,7 @@ public class SearchEngine {
         this.searchables = new Searchable[size];
     }
 
+
     public void add(Searchable searchable) {
             if (count < searchables.length) {
                 searchables[count++] = searchable;
