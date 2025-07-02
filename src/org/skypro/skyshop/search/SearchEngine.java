@@ -18,10 +18,11 @@ public class SearchEngine {
 
     public Searchable[] search(String query) {
         Searchable[] results = new Searchable[5];
+        int counter = 0;
         for (Searchable searchable : searchables) {
             if (searchable != null && searchable.searchTerm().contains(query)) {
-                if (count < 5) {
-                    results[count++] = searchable;
+                if (counter < 5) {
+                    results[counter++] = searchable;
                 } else {
                     break;
                 }
