@@ -2,6 +2,7 @@ package org.skypro.skyshop.product;
 
 import java.util.Objects;
 
+
 public class SimpleProduct extends Product {
     private int price;
 
@@ -42,5 +43,25 @@ public class SimpleProduct extends Product {
     @Override
     public String toString() {
         return "Название товара: " + name + ". Стоимость: " + price + " руб.";
+    }
+
+    @Override
+    public String searchTerm() {
+        return super.searchTerm();
+    }
+
+    @Override
+    public String getSearchTypContent() {
+        return super.getSearchTypContent();
+    }
+
+    @Override
+    public String getNameSearchable() {
+        return super.getNameSearchable();
+    }
+
+    @Override
+    public String getStringRepresentation() {
+        return super.getStringRepresentation();
     }
 }

@@ -1,10 +1,16 @@
 package org.skypro.skyshop;
 
+import org.skypro.skyshop.articles.Article;
 import org.skypro.skyshop.basket.ProductBasket;
 
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
+import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.search.SearchEngine;
+import org.skypro.skyshop.search.Searchable;
+
+import java.util.Arrays;
 
 public class App {
     public static void main(String[] args) {
@@ -12,23 +18,55 @@ public class App {
         ProductBasket basketSecond = new ProductBasket();
         ProductBasket basketThird = new ProductBasket();
 
-        basketFirst.addProductToBasket(new SimpleProduct("Яблоки", 150));
-        basketFirst.addProductToBasket(new SimpleProduct("Бананы", 250));
+        SimpleProduct apple = new SimpleProduct("Яблоки", 150);
+        basketFirst.addProductToBasket(apple);
+        SimpleProduct bananas = new SimpleProduct("Бананы", 250);
+        basketFirst.addProductToBasket(bananas);
         basketFirst.addProductToBasket(new SimpleProduct("Апельсины", 300));
-        basketFirst.addProductToBasket(new DiscountedProduct("Картошка", 500, 10));
+        DiscountedProduct potato = new DiscountedProduct("Картошка", 500, 10);
+        basketFirst.addProductToBasket(potato);
         basketFirst.addProductToBasket(new FixPriceProduct("Пакет для продуктов"));
 
         basketFirst.addProductToBasket(new SimpleProduct("Грейпфрут", 300));
 
-        basketSecond.addProductToBasket(new SimpleProduct("Автомобиль BMV X5", 12_000_000));
-        basketSecond.addProductToBasket(new DiscountedProduct("Автомобиль Toyota land Cruiser", 10_500_000, 15));
+        SimpleProduct bmvX5 = new SimpleProduct("Автомобиль BMV X5", 12_000_000);
+        basketSecond.addProductToBasket(bmvX5);
+        DiscountedProduct toyotaLandCruiser = new DiscountedProduct("Автомобиль Toyota land Cruiser", 10_500_000, 15);
+        basketSecond.addProductToBasket(toyotaLandCruiser);
 
         basketThird.addProductToBasket(new DiscountedProduct("Iphone 14 Pro", 60_000, 10));
         basketThird.addProductToBasket(new DiscountedProduct("Iphone 15 Pro", 70_000, 10));
         basketThird.addProductToBasket(new DiscountedProduct("Iphone 15 Pro Max", 80_000, 10));
-        basketThird.addProductToBasket(new DiscountedProduct("Iphone 16 Pro Max", 90_000, 10));
+        DiscountedProduct iphone16ProMax = new DiscountedProduct("Iphone 16 Pro Max", 90_000, 10);
+        basketThird.addProductToBasket(iphone16ProMax);
         basketThird.addProductToBasket(new FixPriceProduct("Сувенирный пакет с лейблом IPHONE"));
-        
+
+        SearchEngine searchEngine = new SearchEngine(5);
+        searchEngine.add(potato);
+        searchEngine.add(bananas);
+        searchEngine.add(bmvX5);
+        searchEngine.add(toyotaLandCruiser);
+        searchEngine.add(iphone16ProMax);
+
+
+        Article article0 = new Article("Картошка из лукошка", "Из деревни с любовью");
+        Article article1 = new Article("Бананы из Африки", "Лучшие бананы в мире");
+        Article article2 = new Article("Немецкий автомобиль", "БМВ лучший в своем сегменте");
+        Article article3 = new Article("Японский автомобиль", "Тойота один из лучших на востоке и не только");
+        Article article4 = new Article("Iphone Pro Max смартфон", "Iphone Pro Max топовая линейка в компании Apple");
+        searchEngine.add(article0);
+        searchEngine.add(article1);
+        searchEngine.add(article2);
+        searchEngine.add(article3);
+        searchEngine.add(article4);
+
+
+        System.out.println(Arrays.toString(searchEngine.search("Картошка")));
+        System.out.println(Arrays.toString(searchEngine.search("Бананы")));
+        System.out.println(Arrays.toString(searchEngine.search("БМВ")));
+        System.out.println(Arrays.toString(searchEngine.search("Тойота")));
+        System.out.println(Arrays.toString(searchEngine.search("Iphone")));
+
         basketFirst.printBasketDetails();
         basketSecond.printBasketDetails();
         basketThird.printBasketDetails();
@@ -44,4 +82,5 @@ public class App {
         System.out.println("Поиск товара по имени в пустой корзине = " + basketFirst.checkProductInBasketByName("Картошка"));
 
     }
+
 }
