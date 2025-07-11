@@ -5,24 +5,67 @@ import org.skypro.skyshop.basket.ProductBasket;
 
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
-import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.search.BestResultNotFound;
 import org.skypro.skyshop.search.SearchEngine;
-import org.skypro.skyshop.search.Searchable;
 
 import java.util.Arrays;
 
 public class App {
     public static void main(String[] args) {
+        ProductBasket basketZero = new ProductBasket();
         ProductBasket basketFirst = new ProductBasket();
         ProductBasket basketSecond = new ProductBasket();
         ProductBasket basketThird = new ProductBasket();
 
+        try {
+            SimpleProduct simpleProduct = new SimpleProduct("", 20_000);
+            basketZero.addProductToBasket(simpleProduct);
+        } catch (IllegalArgumentException exc) {
+            System.out.println("Некорректные данные у продуктов! " + exc.getMessage());
+        } finally {
+            System.out.println("Проверка прошла - (либо с ошибкой, либо без нее).");
+        }
+
+        try {
+            basketZero.addProductToBasket(new DiscountedProduct("Товары для рыбалки", -10000, 10));
+        } catch (IllegalArgumentException exc) {
+            System.out.println("Некорректные данные у продуктов! " + exc.getMessage());
+        } finally {
+            System.out.println("Проверка прошла - (либо с ошибкой, либо без нее).");
+        }
+
+        try {
+            DiscountedProduct snowboard = new DiscountedProduct("Сноуборд", 55_000, 120);
+            basketZero.addProductToBasket(snowboard);
+        } catch (IllegalArgumentException exc) {
+            System.out.println("Некорректные данные у товара! " + exc.getMessage());
+        } finally {
+            System.out.println("Проверка прошла - (либо с ошибкой, либо без нее).");
+        }
+
+        basketZero.printBasketDetails();
+
+        SearchEngine searchEngine1 = new SearchEngine(7);
+        SimpleProduct mountainsSki = new SimpleProduct("Горные лыжи", 100_000);
+        searchEngine1.add(mountainsSki);
+        try {
+            System.out.println(searchEngine1.findBestFoundMatch("Гор"));
+        } catch (BestResultNotFound e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            System.out.println(searchEngine1.findBestFoundMatch("Снег"));
+        } catch (BestResultNotFound e) {
+            System.out.println(e.getMessage());
+        }
+
         SimpleProduct apple = new SimpleProduct("Яблоки", 150);
         basketFirst.addProductToBasket(apple);
+        basketFirst.addProductToBasket(new SimpleProduct("Апельсины", 300));
         SimpleProduct bananas = new SimpleProduct("Бананы", 250);
         basketFirst.addProductToBasket(bananas);
-        basketFirst.addProductToBasket(new SimpleProduct("Апельсины", 300));
         DiscountedProduct potato = new DiscountedProduct("Картошка", 500, 10);
         basketFirst.addProductToBasket(potato);
         basketFirst.addProductToBasket(new FixPriceProduct("Пакет для продуктов"));
@@ -41,7 +84,7 @@ public class App {
         basketThird.addProductToBasket(iphone16ProMax);
         basketThird.addProductToBasket(new FixPriceProduct("Сувенирный пакет с лейблом IPHONE"));
 
-        SearchEngine searchEngine = new SearchEngine(5);
+        SearchEngine searchEngine = new SearchEngine(10);
         searchEngine.add(potato);
         searchEngine.add(bananas);
         searchEngine.add(bmvX5);

@@ -11,8 +11,8 @@ public class SearchEngine {
 
 
     public void add(Searchable searchable) {
-            if (count < searchables.length) {
-                searchables[count++] = searchable;
+        if (count < searchables.length) {
+            searchables[count++] = searchable;
         }
     }
 
@@ -29,6 +29,30 @@ public class SearchEngine {
             }
         }
         return results;
+    }
+
+    public Searchable findBestFoundMatch(String search) throws BestResultNotFound {
+        int maxCount = 0;
+        Searchable bestMatch = null;
+        for (Searchable searchable : searchables) {
+            if (searchable != null) {
+                String term = searchable.searchTerm();
+                int currentCount = 0;
+                int index = term.indexOf(search);
+                while (index != -1) {
+                    currentCount++;
+                    index = term.indexOf(search, index + search.length());
+                }
+                if (currentCount > maxCount) {
+                    maxCount = currentCount;
+                    bestMatch = searchable;
+                }
+            }
+        }
+        if (bestMatch == null) {
+            throw new BestResultNotFound("Ошибка! Не нашлось подходящей статьи для: " + search);
+        }
+        return bestMatch;
     }
 }
 
