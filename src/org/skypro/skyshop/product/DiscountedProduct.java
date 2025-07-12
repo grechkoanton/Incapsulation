@@ -20,9 +20,6 @@ public class DiscountedProduct extends Product {
 
     @Override
     public int getPrice() {
-        if (basicPrice <= 0) {
-            throw new IllegalArgumentException("Стоимость товара отрицательная!");
-        }
         return (int) basicPrice - (basicPrice * discount) / 100;
     }
 

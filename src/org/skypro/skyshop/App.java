@@ -6,7 +6,7 @@ import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.SimpleProduct;
-import org.skypro.skyshop.search.BestResultNotFound;
+import org.skypro.skyshop.search.BestResultNotFoundException;
 import org.skypro.skyshop.search.SearchEngine;
 
 import java.util.Arrays;
@@ -51,13 +51,13 @@ public class App {
         searchEngine1.add(mountainsSki);
         try {
             System.out.println(searchEngine1.findBestFoundMatch("Гор"));
-        } catch (BestResultNotFound e) {
+        } catch (BestResultNotFoundException e) {
             System.out.println(e.getMessage());
         }
 
         try {
             System.out.println(searchEngine1.findBestFoundMatch("Снег"));
-        } catch (BestResultNotFound e) {
+        } catch (BestResultNotFoundException e) {
             System.out.println(e.getMessage());
         }
 

@@ -16,9 +16,6 @@ public class SimpleProduct extends Product {
 
     @Override
     public int getPrice() {
-        if (price <= 0) {
-            throw new IllegalArgumentException("Стоимость товара отрицательная!");
-        }
         return this.price;
     }
 

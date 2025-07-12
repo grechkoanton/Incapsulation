@@ -31,7 +31,7 @@ public class SearchEngine {
         return results;
     }
 
-    public Searchable findBestFoundMatch(String search) throws BestResultNotFound {
+    public Searchable findBestFoundMatch(String search) throws BestResultNotFoundException {
         int maxCount = 0;
         Searchable bestMatch = null;
         for (Searchable searchable : searchables) {
@@ -50,7 +50,7 @@ public class SearchEngine {
             }
         }
         if (bestMatch == null) {
-            throw new BestResultNotFound("Ошибка! Не нашлось подходящей статьи для: " + search);
+            throw new BestResultNotFoundException("Ошибка! Не нашлось подходящей статьи для: " + search);
         }
         return bestMatch;
     }
