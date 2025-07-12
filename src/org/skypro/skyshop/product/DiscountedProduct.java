@@ -8,8 +8,11 @@ public class DiscountedProduct extends Product {
 
     public DiscountedProduct(String name, int basicPrice, int discount) {
         super(name);
-        if (basicPrice < 0) {
+        if (basicPrice <= 0) {
             throw new IllegalArgumentException("Стоимость товара отрицательная!");
+        }
+        if (discount < 0 || discount > 100) {
+            throw new IllegalArgumentException("Такой скидки не существует!");
         }
         this.basicPrice = basicPrice;
         this.discount = discount;
@@ -17,9 +20,6 @@ public class DiscountedProduct extends Product {
 
     @Override
     public int getPrice() {
-        if (basicPrice < 0) {
-            throw new IllegalArgumentException("Стоимость товара отрицательная!");
-        }
         return (int) basicPrice - (basicPrice * discount) / 100;
     }
 
@@ -43,7 +43,7 @@ public class DiscountedProduct extends Product {
 
     @Override
     public String toString() {
-        return "Название товара со скидкой: " + name + ". Стоимость: " + basicPrice + " руб." + " (" + discount + " %).";
+        return "Название товара со скидкой: " + name + ". Стоимость: " + basicPrice + " руб." + " (" + discount + " % скидка).";
     }
 
     @Override

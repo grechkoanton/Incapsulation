@@ -8,7 +8,7 @@ public class SimpleProduct extends Product {
 
     public SimpleProduct(String name, int price) {
         super(name);
-        if (price < 0) {
+        if (price <= 0) {
             throw new IllegalArgumentException("Стоимость товара отрицательная!");
         }
         this.price = price;
@@ -16,9 +16,6 @@ public class SimpleProduct extends Product {
 
     @Override
     public int getPrice() {
-        if (price < 0) {
-            throw new IllegalArgumentException("Стоимость товара отрицательная!");
-        }
         return this.price;
     }
 
