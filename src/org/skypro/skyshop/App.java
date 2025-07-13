@@ -2,14 +2,13 @@ package org.skypro.skyshop;
 
 import org.skypro.skyshop.articles.Article;
 import org.skypro.skyshop.basket.ProductBasket;
-
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
+import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.BestResultNotFoundException;
 import org.skypro.skyshop.search.SearchEngine;
-
-import java.util.Arrays;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) {
@@ -46,9 +45,9 @@ public class App {
 
         basketZero.printBasketDetails();
 
-        SearchEngine searchEngine1 = new SearchEngine(7);
+        SearchEngine searchEngine1 = new SearchEngine();
         SimpleProduct mountainsSki = new SimpleProduct("Горные лыжи", 100_000);
-        searchEngine1.add(mountainsSki);
+        searchEngine1.addSearchable(mountainsSki);
         try {
             System.out.println(searchEngine1.findBestFoundMatch("Гор"));
         } catch (BestResultNotFoundException e) {
@@ -84,39 +83,64 @@ public class App {
         basketThird.addProductToBasket(iphone16ProMax);
         basketThird.addProductToBasket(new FixPriceProduct("Сувенирный пакет с лейблом IPHONE"));
 
-        SearchEngine searchEngine = new SearchEngine(10);
-        searchEngine.add(potato);
-        searchEngine.add(bananas);
-        searchEngine.add(bmvX5);
-        searchEngine.add(toyotaLandCruiser);
-        searchEngine.add(iphone16ProMax);
-
+        SearchEngine searchEngine = new SearchEngine();
+        searchEngine.addSearchable(potato);
+        searchEngine.addSearchable(bananas);
+        searchEngine.addSearchable(bmvX5);
+        searchEngine.addSearchable(toyotaLandCruiser);
+        searchEngine.addSearchable(iphone16ProMax);
 
         Article article0 = new Article("Картошка из лукошка", "Из деревни с любовью");
         Article article1 = new Article("Бананы из Африки", "Лучшие бананы в мире");
         Article article2 = new Article("Немецкий автомобиль", "БМВ лучший в своем сегменте");
         Article article3 = new Article("Японский автомобиль", "Тойота один из лучших на востоке и не только");
         Article article4 = new Article("Iphone Pro Max смартфон", "Iphone Pro Max топовая линейка в компании Apple");
-        searchEngine.add(article0);
-        searchEngine.add(article1);
-        searchEngine.add(article2);
-        searchEngine.add(article3);
-        searchEngine.add(article4);
+        searchEngine.addSearchable(article0);
+        searchEngine.addSearchable(article1);
+        searchEngine.addSearchable(article2);
+        searchEngine.addSearchable(article3);
+        searchEngine.addSearchable(article4);
 
 
-        System.out.println(Arrays.toString(searchEngine.search("Картошка")));
-        System.out.println(Arrays.toString(searchEngine.search("Бананы")));
-        System.out.println(Arrays.toString(searchEngine.search("БМВ")));
-        System.out.println(Arrays.toString(searchEngine.search("Тойота")));
-        System.out.println(Arrays.toString(searchEngine.search("Iphone")));
+        System.out.println(searchEngine.search("Картошка"));
+        System.out.println(searchEngine.search("Бананы"));
+        System.out.println(searchEngine.search("БМВ"));
+        System.out.println(searchEngine.search("Тойота"));
+        System.out.println(searchEngine.search("Iphone"));
 
         basketFirst.printBasketDetails();
+        basketFirst.calculateTotalBasketCost();
+
         basketSecond.printBasketDetails();
+        basketSecond.calculateTotalBasketCost();
+
         basketThird.printBasketDetails();
+        basketThird.calculateTotalBasketCost();
 
         System.out.println("Поиск товара, который есть в корзине = " + basketSecond.checkProductInBasketByName("Автомобиль BMV X5"));
 
+        System.out.println("Поиск товара, который есть в корзине = " + basketSecond.checkProductInBasketByName("Собака"));
+
         System.out.println("Поиск товара, которого нет в корзине = " + basketFirst.checkProductInBasketByName("Грейпфрут"));
+
+        List<Product> removedBmv = basketSecond.removeProductsByName("Автомобиль BMV X5");
+        List<Product> removedToyota = basketSecond.removeProductsByName("Автомобиль Toyota land Cruiser");
+        System.out.println(removedBmv + ", " + removedToyota);
+        basketSecond.printBasketDetails();
+        removedBmv.remove(bmvX5);
+        removedToyota.remove(toyotaLandCruiser);
+        if (removedBmv.isEmpty()) {
+            System.out.println("Список пуст!");
+        } else {
+            System.out.println(removedBmv);
+        }
+        if (removedToyota.isEmpty()) {
+            System.out.println("Список пуст!");
+        } else {
+            System.out.println(removedToyota);
+        }
+        basketSecond.printBasketDetails();
+
 
         basketFirst.clearBasket();
 
@@ -125,5 +149,4 @@ public class App {
         System.out.println("Поиск товара по имени в пустой корзине = " + basketFirst.checkProductInBasketByName("Картошка"));
 
     }
-
 }

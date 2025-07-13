@@ -1,39 +1,34 @@
 package org.skypro.skyshop.search;
 
+import java.util.LinkedList;
+import java.util.List;
+
+
 public class SearchEngine {
 
-    private final Searchable[] searchables;
-    private int count = 0;
+    private final List<Searchable> searchables;
 
-    public SearchEngine(int size) {
-        this.searchables = new Searchable[size];
+    public SearchEngine() {
+        this.searchables = new LinkedList<>();
     }
 
-
-    public void add(Searchable searchable) {
-        if (count < searchables.length) {
-            searchables[count++] = searchable;
-        }
+    public void addSearchable(Searchable searchable) {
+            searchables.add(searchable);
     }
 
-    public Searchable[] search(String query) {
-        Searchable[] results = new Searchable[5];
-        int counter = 0;
+    public List<Searchable> search(String query) {
+        List<Searchable> results = new LinkedList<>();
         for (Searchable searchable : searchables) {
             if (searchable != null && searchable.searchTerm().contains(query)) {
-                if (counter < 5) {
-                    results[counter++] = searchable;
-                } else {
-                    break;
-                }
+                    results.add(searchable);
             }
         }
         return results;
     }
 
-    public Searchable findBestFoundMatch(String search) throws BestResultNotFoundException {
+    public List<Searchable> findBestFoundMatch(String search) throws BestResultNotFoundException {
         int maxCount = 0;
-        Searchable bestMatch = null;
+        List<Searchable> bestMatch = null;
         for (Searchable searchable : searchables) {
             if (searchable != null) {
                 String term = searchable.searchTerm();
@@ -45,7 +40,7 @@ public class SearchEngine {
                 }
                 if (currentCount > maxCount) {
                     maxCount = currentCount;
-                    bestMatch = searchable;
+                    bestMatch = searchables;
                 }
             }
         }
