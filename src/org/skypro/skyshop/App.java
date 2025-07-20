@@ -8,7 +8,10 @@ import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.BestResultNotFoundException;
 import org.skypro.skyshop.search.SearchEngine;
+import org.skypro.skyshop.search.Searchable;
+
 import java.util.List;
+import java.util.Map;
 
 public class App {
     public static void main(String[] args) {
@@ -101,12 +104,20 @@ public class App {
         searchEngine.addSearchable(article3);
         searchEngine.addSearchable(article4);
 
+        Map<String, Searchable> searchResults1 = searchEngine.search("Картошка");
+        for (Map.Entry<String, Searchable> entry : searchResults1.entrySet()) {
+            System.out.println("Название: " + entry.getKey() + ", Назначение: " + entry.getValue());
+        }
+        Map<String, Searchable> searchResults2 = searchEngine.search("Бананы");
+        System.out.println(searchResults2);
+        Map<String, Searchable> searchResults3 = searchEngine.search("БМВ");
+        System.out.println(searchResults3);
+        Map<String, Searchable> searchResults4 = searchEngine.search("Тойота");
+        System.out.println(searchResults4);
+        Map<String, Searchable> searchResults5 = searchEngine.search("Iphone");
+        System.out.println(searchResults5);
 
-        System.out.println(searchEngine.search("Картошка"));
-        System.out.println(searchEngine.search("Бананы"));
-        System.out.println(searchEngine.search("БМВ"));
-        System.out.println(searchEngine.search("Тойота"));
-        System.out.println(searchEngine.search("Iphone"));
+
 
         basketFirst.printBasketDetails();
         basketFirst.calculateTotalBasketCost();
@@ -117,11 +128,11 @@ public class App {
         basketThird.printBasketDetails();
         basketThird.calculateTotalBasketCost();
 
+        System.out.println("Поиск товара, который есть в корзине = " + basketFirst.checkProductInBasketByName("Грейпфрут"));
+
         System.out.println("Поиск товара, который есть в корзине = " + basketSecond.checkProductInBasketByName("Автомобиль BMV X5"));
 
-        System.out.println("Поиск товара, который есть в корзине = " + basketSecond.checkProductInBasketByName("Собака"));
-
-        System.out.println("Поиск товара, которого нет в корзине = " + basketFirst.checkProductInBasketByName("Грейпфрут"));
+        System.out.println("Поиск товара, которого нет в корзине = " + basketThird.checkProductInBasketByName("Собака"));
 
         List<Product> removedBmv = basketSecond.removeProductsByName("Автомобиль BMV X5");
         List<Product> removedToyota = basketSecond.removeProductsByName("Автомобиль Toyota land Cruiser");
