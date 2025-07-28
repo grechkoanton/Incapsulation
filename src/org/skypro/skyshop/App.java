@@ -12,6 +12,7 @@ import org.skypro.skyshop.search.Searchable;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class App {
     public static void main(String[] args) {
@@ -88,12 +89,14 @@ public class App {
 
         SearchEngine searchEngine = new SearchEngine();
         searchEngine.addSearchable(potato);
+        searchEngine.addSearchable(potato);
+        searchEngine.addSearchable(bananas);
         searchEngine.addSearchable(bananas);
         searchEngine.addSearchable(bmvX5);
         searchEngine.addSearchable(toyotaLandCruiser);
         searchEngine.addSearchable(iphone16ProMax);
 
-        Article article0 = new Article("Картошка из лукошка", "Из деревни с любовью");
+        Article article0 = new Article("Картошка из лукошка", "Картошка из деревни с любовью");
         Article article1 = new Article("Бананы из Африки", "Лучшие бананы в мире");
         Article article2 = new Article("Немецкий автомобиль", "БМВ лучший в своем сегменте");
         Article article3 = new Article("Японский автомобиль", "Тойота один из лучших на востоке и не только");
@@ -104,17 +107,18 @@ public class App {
         searchEngine.addSearchable(article3);
         searchEngine.addSearchable(article4);
 
-        Map<String, Searchable> searchResults1 = searchEngine.search("Картошка");
-        for (Map.Entry<String, Searchable> entry : searchResults1.entrySet()) {
-            System.out.println("Название: " + entry.getKey() + ", Назначение: " + entry.getValue());
+        Set<Searchable> searchResults1 = searchEngine.search("Кар");
+        System.out.println(searchResults1);
+        for (Searchable entry : searchResults1) {
+            System.out.println("Наименование: " + entry.getNameSearchable());
         }
-        Map<String, Searchable> searchResults2 = searchEngine.search("Бананы");
+        Set<Searchable> searchResults2 = searchEngine.search("Бан");
         System.out.println(searchResults2);
-        Map<String, Searchable> searchResults3 = searchEngine.search("БМВ");
+        Set<Searchable> searchResults3 = searchEngine.search("БМ");
         System.out.println(searchResults3);
-        Map<String, Searchable> searchResults4 = searchEngine.search("Тойота");
+        Set<Searchable> searchResults4 = searchEngine.search("Той");
         System.out.println(searchResults4);
-        Map<String, Searchable> searchResults5 = searchEngine.search("Iphone");
+        Set<Searchable> searchResults5 = searchEngine.search("Iph");
         System.out.println(searchResults5);
 
 
