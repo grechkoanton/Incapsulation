@@ -20,36 +20,31 @@ public class ProductBasket {
     }
 
     public int calculateTotalBasketCost() {
-        int sum = 0;
-        for (List<Product> productList : products.values()) {
-            for (Product product : productList) {
-                sum += product.getPrice();
-            }
-        }
-        System.out.println("Итоговая сумма из метода calculateTotalBasketCost: " + sum + " руб.");
-        return sum;
+        int total = products.values().stream().flatMap(Collection::stream)
+                .mapToInt(x -> x.getPrice())
+                .sum();
+        System.out.println("Итоговая сумма из метода calculateTotalBasketCost: " + total + " руб.");
+        return total;
     }
 
     public void printBasketDetails() {
-        int sum = 0;
-        int specialCount = 0;
-        for (List<Product> productList : products.values()) {
-            for (Product product : productList) {
-                if (product != null) {
-                    System.out.println(product);
-                    sum += product.getPrice();
-                }
-                if (product == null) {
-                    System.out.println("Ячейка в корзине пустая.");
-                }
-                if (product != null && product.isSpecial()) {
-                    specialCount++;
-                }
-            }
+        if (products == null) {
+            System.out.println("Ячейка в корзине пустая.");
         }
+        int specialCount = getSpecialCount();
+        products.values().stream().flatMap(Collection::stream).forEach(product -> System.out.println(product));
+        int total = products.values().stream().flatMap(Collection::stream)
+                .mapToInt(Product::getPrice)
+                .sum();
+        System.out.println("Итого: " + total + " руб.");
+        System.out.println("Специальных товаров: " + specialCount);
+    }
 
-        System.out.println("Итого: " + sum + " руб.");
-        System.out.println("Специальных товаров: " + specialCount + " шт.");
+    private int getSpecialCount() {
+        return (int) products.values().stream()
+                .flatMap(Collection::stream)
+                .filter(Product::isSpecial)
+                .count();
     }
 
     public boolean checkProductInBasketByName(String productName) {
