@@ -5,29 +5,29 @@ import java.util.*;
 
 public class SearchEngine {
 
-    private final List<Searchable> searchables;
+    private final Set<Searchable> searchables;
 
     public SearchEngine() {
-        this.searchables = new ArrayList<>();
+        this.searchables = new HashSet<>();
     }
 
     public void addSearchable(Searchable searchable) {
             searchables.add(searchable);
     }
 
-    public Map<String, Searchable> search(String query) {
-        Map<String, Searchable> results = new TreeMap<>();
+    public Set<Searchable> search(String query) {
+        Set<Searchable> results = new TreeSet<>(new SearchableComparator());
         for (Searchable searchable : searchables) {
             if (searchable != null && searchable.searchTerm().contains(query)) {
-                    results.put(searchable.getNameSearchable(), searchable);
+                    results.add(searchable);
             }
         }
         return results;
     }
 
-    public List<Searchable> findBestFoundMatch(String search) throws BestResultNotFoundException {
+    public Set<Searchable> findBestFoundMatch(String search) throws BestResultNotFoundException {
         int maxCount = 0;
-        List<Searchable> bestMatch = null;
+        Set<Searchable> bestMatch = null;
         for (Searchable searchable : searchables) {
             if (searchable != null) {
                 String term = searchable.searchTerm();
