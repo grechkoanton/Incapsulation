@@ -16,20 +16,7 @@ public class SearchEngine {
     }
 
     public Set<Searchable> search(String query) {
-        Set<Searchable> results = new TreeSet<>(new Comparator<Searchable>() {
-            @Override
-            public int compare(Searchable o1, Searchable o2) {
-                System.out.println("Сравниваем товары: " + o1.getNameSearchable() + " и " + o2.getNameSearchable());
-                int lenghtCompare = Integer.compare(o1.getNameSearchable().length(), o2.getNameSearchable().length());
-                if (lenghtCompare != 0) {
-                    System.out.println("Результат сравнения по длине имени: " + lenghtCompare);
-                    return lenghtCompare;
-                }
-                int result = o1.getNameSearchable().compareTo(o2.getNameSearchable());
-                System.out.println("Результат сравнения по имени: " + result);
-                return result;
-            }
-        });
+        Set<Searchable> results = new TreeSet<>(new SearchableComparator());
         for (Searchable searchable : searchables) {
             if (searchable != null && searchable.searchTerm().contains(query)) {
                     results.add(searchable);
